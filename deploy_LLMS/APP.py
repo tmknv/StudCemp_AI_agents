@@ -26,7 +26,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-@app.post("api/generate")
+@app.post("/api/generate")
 async def generate_text(data: PromptInput, request: Request):
     model: Llama = request.app.state.model
 
