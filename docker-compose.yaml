@@ -1,15 +1,33 @@
 version: "3.8"
 
 services:
-  llm-api:
-    build: .
+  main-app:
+    build:
+      dockerfile: Dockerfile
     ports:
       - "9090:9090"
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - capabilities: [gpu]
-    runtime: nvidia
+    restart: always
+    hostname: fastapi_app
+
+  prometheus:
+    image: prom/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - "9091:9090"
+    volumes:
+      - "./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
+    hostname: prometheus
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
     environment:
-      - NVIDIA_VISIBLE_DEVICES=all
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    hostname: grafana
+    depends_on:
+      - prometheus
