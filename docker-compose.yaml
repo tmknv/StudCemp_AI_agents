@@ -3,6 +3,7 @@ version: "3.8"
 services:
   main-app:
     build:
+      context: .
       dockerfile: Dockerfile
     ports:
       - "9090:9090"
