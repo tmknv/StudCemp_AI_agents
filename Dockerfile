@@ -22,7 +22,7 @@ RUN pip3 install --no-cache-dir \
     Cython
 
 # llama-cpp-python для CPU
-RUN pip3 install llama-cpp-python --no-cache-dir --force-reinstall --no-binary :all:
+RUN pip3 install llama-cpp-python --no-cache-dir
 
 # Качаем модель
 RUN mkdir -p models && \
