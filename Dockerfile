@@ -27,7 +27,7 @@ RUN pip3 install --no-cache-dir \
     Cython
 
 # Установка llama-cpp-python с поддержкой cuBLAS
-RUN CMAKE_ARGS="-DLLAMA_CUBLAS=on" pip3 install llama-cpp-python --no-cache-dir
+RUN pip3 install llama-cpp-python --no-cache-dir
 
 # Качаем модель
 RUN mkdir -p models && \
