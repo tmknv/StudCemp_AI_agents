@@ -14,8 +14,8 @@ async def lifespan(app: FastAPI):
     app.state.model = Llama(
         model_path="models/mistral-7b-instruct-v0.1.Q4_K_M.gguf",
         n_ctx=4096,
-        n_threads=8,  # зависит от машины
-        n_gpu_layers=32,  # можно 0 если только CPU
+        n_threads=8,  # 8 потоки
+        n_gpu_layers=0, #0 тк тока цпу 
         seed=42,
         verbose=False
     )
