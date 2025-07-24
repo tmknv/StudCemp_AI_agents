@@ -6,7 +6,7 @@ from crewai import Agent, Task, Crew
 
 # кастомный LLM для апишки 
 class MyLLM(LLM):
-    url: str = "http://89.169.145.2:9090/api/generate"
+    url: str = "http://51.250.79.16:8000/v1/completions"
 
     @property
     def _llm_type(self) -> str:
@@ -18,12 +18,12 @@ class MyLLM(LLM):
             "system_prompt": "You are friendly AI assistant",
             "temperature": 0.7,
             "top_p": 0.9,
-            "max_tokens": 256
+            "max_tokens": 1024
         }
         headers = {"Content-Type": "application/json"}
-        response = httpx.post(self.url, json=payload, headers=headers, timeout=30.0)
+        response = httpx.post(self.url, json=payload, headers=headers, timeout=120.0)
         response.raise_for_status()
-        return response.json()["output"]
+        return response.json()["choices"][0]["text"]
 
 
 llm = MyLLM()
